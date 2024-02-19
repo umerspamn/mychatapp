@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dead Simple Chat Example</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome to our personal chatting platform</h1>
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+
+  <script src="https://cdn.deadsimplechat.com/dead-simple-chat.min.js"></script>
+  <script>
+    const publicKey = 'YOUR_PUBLIC_KEY';pub_4f316939545f6a32326e354a49475a5a3364743654495758724d774c616f6d6c5f4959514d59775054524d6651364a6f
+
+    const deadSimpleChat = new DeadSimpleChat(publicKey);
+
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Simulate user authentication (replace with your own secure authentication method)
+      if (username && password) {
+        const token = btoa(`${username}:${password}`);
+        const user = await deadSimpleChat.authenticate(token);
+        if (user) {
+          // User authenticated, redirect to chat page
+          window.location.href = `/chat?username=${username}`;
+        } else {
+          alert('No entry cuz you aint sadi');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

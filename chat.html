@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>hello sadi</h1>
+  <p>your personalized chatbot is in production. scroll down tap on blue textbox to msg</p>
+  <div id="chatMessages"></div>
+  <form id="chatForm">
+    <input type="text" id="messageInput" required>
+    <button type="submit">Send</button>
+  </form>
+
+  <script src="https://cdn.deadsimplechat.com/dead-simple-chat.min.js"></script>
+  <script>
+    const publicKey = 'YOUR_PUBLIC_KEY'; // Replace with your Dead Simple Chat public key
+    const deadSimpleChat = new DeadSimpleChat(publicKey);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('username');
+
+    deadSimpleChat.connect(username);
+
+    deadSimpleChat.onMessage((message) => {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      messageElement.textContent = `${message.sender}: ${message.text}`;
+      chatMessages.appendChild(messageElement);
+    });
+
+    document.getElementById('chatForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const messageInput = document.getElementById('messageInput');
+      const message = messageInput.value;
+      deadSimpleChat.sendMessage(message);
+      messageInput.value = '';
+    });
+  </script>
+</body>
+</html>
